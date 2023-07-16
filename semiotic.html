@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title></title>
+    <style>
+        #boxes {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        div {
+            float: left;
+            padding: 0 10px;
+        }
+        
+    </style>
+</head>
+<body>
+    <main id="boxes">
+        
+        <div id = "left_col">
+        <label for="a-term">A (top left):</label>
+        <input type="text" id="a-term"><br>
+        <label for="b-term">B (top right):</label>
+        <input type="text" id="b-term"><br>
+        <label for="not-a-term">'A (bottom right):</label>
+        <input type="text" id="not-a-term"><br>
+        <label for="not-b-term">'B (bottom left):</label>
+        <input type="text" id="not-b-term"><br>
+        
+        <button id="draw" onclick="drawCanvas()">Generate Semiotic Square</button> <br>
+        </div>
+    
+        <div id = "center_col">
+        <label for="top-term">Top:</label>
+        <input type="text" id="top-term"><br>
+        <label for="left-term">Left:</label>
+        <input type="text" id="left-term"><br>
+        <label for="right-term">Right:</label>
+        <input type="text" id="right-term"><br>
+        <label for="bottom-term">Bottom:</label>
+        <input type="text" id="bottom-term"><br>        
+        </div>
+        
+        <div id="right_col">
+        <label for="square-name">Title:</label>
+        <input type="text" id="square-name"><br>
+        <p>If you do not enter a title, one will be automatically generated.</p>
+        <button id="save" onclick="saveCanvas()">Save Semiotic Square</button> <br>
+
+        <a id="link"></a>
+        </div>
+        
+    </main>
+    
+    
+
+<canvas id="myCanvas" width="1000" height="500" style="border:1px solid #d3d3d3;"></canvas> 
+
+<script>
+    function drawCanvas() {
+        
+    //TODO - CLEAR CANVAS    
+    let c = document.getElementById("myCanvas");
+    let ctx = c.getContext("2d");
+    ctx.clearRect(0, 0, c.width, c.height);
+    ctx.beginPath();
+   
+   
+    //trying to implement text input
+    //wait no i gotta use a button or w/e
+    var a = document.getElementById("a-term").value;
+    var b = document.getElementById("b-term").value;
+    var inv_a = document.getElementById("not-a-term").value;
+    var inv_b = document.getElementById("not-b-term").value;
+    
+    //draw inner labels 
+    ctx.font = "24px Times New Roman";
+    ctx.textAlign = "right";
+    //ctx.fillText("first term", 347, 180);
+    ctx.fillText(a, 347, 180);
+    ctx.fillText(inv_b, 347, 330);
+    ctx.textAlign = "left";
+    ctx.fillText(b, 603, 180);
+    ctx.fillText(inv_a, 603, 330);
+    
+    //draw inner lines
+    ctx.moveTo(350, 175);
+    ctx.lineTo(600, 325);
+    ctx.moveTo(350, 325);
+    ctx.lineTo(600, 175);
+    
+    ctx.moveTo(600, 175);
+    ctx.lineTo(350, 175);
+    
+    ctx.moveTo(350, 325);
+    ctx.lineTo(600, 325);
+    ctx.stroke();
+    
+    //475, 250 is the middle
+    //draw outer labels
+    ctx.textAlign = "center";
+    ctx.fillText(document.getElementById("top-term").value, 475, 75);
+    ctx.fillText(document.getElementById("bottom-term").value, 475, 425);
+    ctx.textAlign = "right";
+    ctx.fillText(document.getElementById("left-term").value, 150, 250);
+    ctx.textAlign = "left";
+    ctx.fillText(document.getElementById("right-term").value, 800, 250);
+    
+    //draw outer lines
+    //left
+    ctx.moveTo(300, 175);
+    ctx.lineTo(153, 245);
+    ctx.lineTo(300, 325)
+    //right
+    ctx.moveTo(650, 175);
+    ctx.lineTo(797, 245);
+    ctx.lineTo(650, 325);
+    //bottom
+    ctx.moveTo(300, 325);
+    ctx.lineTo(475, 425);
+    ctx.lineTo(650, 325);
+    //top
+    ctx.moveTo(300, 175);
+    ctx.lineTo(475, 75);
+    ctx.lineTo(650, 175);
+    
+    //angles are off bruh >:(
+    
+    
+    ctx.stroke();
+    }
+    
+    
+    function saveCanvas() {
+        var link = document.getElementById("link");
+        link.setAttribute("download", "MintyPaper.png");
+        link.setAttribute("href", canvas.toDataUrl("image/png").replace("image/png", "image/octet-stream"));
+        link.click();
+    }
+    
+</script>
+
+</body>
+</html>
